@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public class EditerCollaborateurController extends HttpServlet {
 
+	private static final long serialVersionUID = -2624817299853340666L;
+	
 	private static final String MATRICULE_PARAM = "matricule";
 	private static final String TITRE_PARAM = "titre";
 	private static final String NOM_PARAM = "nom";
