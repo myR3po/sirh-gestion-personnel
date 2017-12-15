@@ -11,6 +11,7 @@
 		<title>SGP - App</title>
 	</head>
 	<body>
+	<%@include file="../navBar.jsp" %>
 		<h1>Statistiques</h1>
 
 			<div class="row">
@@ -27,7 +28,7 @@
 
 	
 				<%
-				Map<String, LongSummaryStatistics> listeStats =(Map<String, LongSummaryStatistics>)request.getAttribute("listeStats");
+				Map<String, LongSummaryStatistics> listeStats = (Map<String, LongSummaryStatistics>)request.getAttribute("listeStats");
 				for (String chemin : listeStats.keySet()) {
 				%>
 					<tr>

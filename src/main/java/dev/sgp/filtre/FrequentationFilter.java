@@ -15,27 +15,20 @@ import dev.sgp.util.Constantes;
 
 public class FrequentationFilter implements Filter {
 
-	private FilterConfig config;
 	private final VisiteWebService visiteService = Constantes.VISITE_WEB_SERVICE;
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {
-		this.config = config;
 	}
 
 	@Override
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
 			throws IOException, ServletException {
-		// TODO Auto-generated method stub
-
 		long before = System.currentTimeMillis();
 		chain.doFilter(request, response);
 		long after = System.currentTimeMillis();
 		String path = ((HttpServletRequest) request).getRequestURI();
-		
 		visiteService.sauvegarderCollaborateur(new VisiteWeb(path, (after - before)));
-			
-		config.getServletContext().log(path + " : " + (after - before));
 	}
 
 	@Override

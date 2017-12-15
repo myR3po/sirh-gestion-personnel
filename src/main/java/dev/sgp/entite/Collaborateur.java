@@ -37,7 +37,7 @@ public class Collaborateur {
 	public Collaborateur(String nom, String prenom, LocalDate dateNaissance, String adresse,
 			String numeroSecuriteSociale, String emailPro, String intitulePoste, Departement departement,
 			Boolean actif) {
-		super();
+		this();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;

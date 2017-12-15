@@ -9,6 +9,7 @@
 		<title>SGP - App</title>
 	</head>
 	<body>
+	<%@include file="../navBar.jsp" %>
 		<h1> Nouveau Collaborateur </h1>
 		
 				
