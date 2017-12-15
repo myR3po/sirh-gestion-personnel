@@ -9,14 +9,6 @@ public class DepartementService {
 	List<Departement> listeDepartements = new ArrayList<>();
 
 	public List<Departement> listerDepartements() {
-		
-		if(listeDepartements.size() == 0) {
-			listeDepartements.add(new  Departement(1, "Comptabilite"));
-			listeDepartements.add(new  Departement(2, "Ressources Humaines"));
-			listeDepartements.add(new  Departement(3, "Informatique"));
-			listeDepartements.add(new  Departement(4, "Administratif"));
-		}
-		
 		return listeDepartements;
 	}
 

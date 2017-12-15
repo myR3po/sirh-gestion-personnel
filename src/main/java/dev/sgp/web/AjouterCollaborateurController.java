@@ -2,10 +2,6 @@ package dev.sgp.web;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.ZonedDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import javax.servlet.ServletException;
@@ -39,9 +35,9 @@ public class AjouterCollaborateurController extends HttpServlet {
 	private static final String PARAM_MSG_ERROR_INTITULE_POSTE = "intituleError";
 	private static final String PARAM_MSG_ERROR_DEPARTEMENT = "departementError";
 
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
 	
-	private DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
+	private final DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

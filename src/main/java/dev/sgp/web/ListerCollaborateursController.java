@@ -7,7 +7,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
@@ -15,10 +14,10 @@ import dev.sgp.util.Constantes;
 
 public class ListerCollaborateursController extends HttpServlet {
 	
-	private static final long serialVersionUID = 4775538020842020128L;
+	static final long serialVersionUID = 2327864110537760628L;
 	
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
-	private DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
+	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private final DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
 	
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
