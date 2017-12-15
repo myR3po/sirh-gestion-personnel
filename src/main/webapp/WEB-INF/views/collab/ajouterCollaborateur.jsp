@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="dev.sgp.entite.Departement"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -33,7 +35,7 @@
 					
 					<div class="form-group">
 	                    <label for="adresse">Adresse *</label>
-	                    <textarea class="form-control" id="adresse" name="adresse" value="${adresse}" required></textarea>
+	                    <textarea class="form-control" id="adresse" name="adresse" required>${adresse}</textarea>
 	                    <span class="help-block has-error">${adresseError}</span>
 					</div>
 					
@@ -42,7 +44,29 @@
 			  	 		<input class="form-control" type="text"  id="numeroSecuriteSociale" name="numeroSecuriteSociale" value="${numeroSecuriteSociale}" maxLength=15 required />
 			  	 		<span class="help-block has-error">${numeroSecuriteSocialeError}</span>
 					</div>
-				
+					
+					<div class="form-group">
+	                    <label for="intitule">Fonction</label>
+			  	 		<input class="form-control" type="text"  id="intitule" name="intitule" value="${intitule}" required />
+			  	 		<span class="help-block has-error">${intituleError}</span>
+					</div>
+					
+					
+					<div class="form-group">
+	                    <label for="departement">Departement</label>
+						<select class="form-control" id="departement" name="departement">
+							<%
+								List<Departement> listeDepartements =(List<Departement>)request.getAttribute("listeDepartements");
+								for (Departement departement : listeDepartements) {
+							%>
+					      		<option value="<%= departement.getNom() %>"><%= departement.getNom() %></option>
+					    	<%
+								}
+							%>
+					    </select>
+					    <span class="help-block has-error">${departementError}</span>
+					</div>
+					
 					<div class="form-group">
 		                <input type="submit" value="Valider" class="btn btn-default submit" />
 					</div>

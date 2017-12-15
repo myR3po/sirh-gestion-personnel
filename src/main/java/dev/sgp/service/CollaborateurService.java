@@ -12,7 +12,7 @@ public class CollaborateurService {
 		return listeCollaborateurs;
 	}
 
-	public void sauvegarderCollaborateur(Collaborateur collab) {
+	public void sauvegarderCollaborateur(Collaborateur collab) {	
 		listeCollaborateurs.add(collab);
 	}
 }

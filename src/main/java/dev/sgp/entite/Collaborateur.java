@@ -20,6 +20,8 @@ public class Collaborateur {
 	private String  numeroSecuriteSociale;
 	private String  emailPro ;
 	private String photo;
+	private String intitulePoste;
+	private Departement departement;
 	private ZonedDateTime dateHeureCreation;
 	private Boolean actif;
 	
@@ -29,6 +31,25 @@ public class Collaborateur {
 		this.setActif(true);
 		matricule = UUID.randomUUID().toString().replaceAll("-", "").substring(4, 9);
 	}
+	
+	
+
+	public Collaborateur(String nom, String prenom, LocalDate dateNaissance, String adresse,
+			String numeroSecuriteSociale, String emailPro, String intitulePoste, Departement departement,
+			Boolean actif) {
+		super();
+		this.nom = nom;
+		this.prenom = prenom;
+		this.dateNaissance = dateNaissance;
+		this.adresse = adresse;
+		this.numeroSecuriteSociale = numeroSecuriteSociale;
+		this.emailPro = emailPro;
+		this.intitulePoste = intitulePoste;
+		this.departement = departement;
+		this.actif = actif;
+	}
+
+
 
 	/**
 	 * @param dateHeureCreation the dateHeureCreation to set
@@ -161,6 +182,34 @@ public class Collaborateur {
 	 */
 	public void setActif(Boolean actif) {
 		this.actif = actif;
+	}
+
+	/**
+	 * @return the intitulePoste
+	 */
+	public String getIntitulePoste() {
+		return intitulePoste;
+	}
+
+	/**
+	 * @param intitulePoste the intitulePoste to set
+	 */
+	public void setIntitulePoste(String intitulePoste) {
+		this.intitulePoste = intitulePoste;
+	}
+
+	/**
+	 * @return the departement
+	 */
+	public Departement getDepartement() {
+		return departement;
+	}
+
+	/**
+	 * @param departement the departement to set
+	 */
+	public void setDepartement(Departement departement) {
+		this.departement = departement;
 	}
 	
 
