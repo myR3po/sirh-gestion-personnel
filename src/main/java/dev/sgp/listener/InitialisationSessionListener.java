@@ -29,16 +29,16 @@ public class InitialisationSessionListener implements ServletContextListener {
 				
 		List<Collaborateur> listeCollaborateurs = collabService.listerCollaborateurs();
 
-		listeCollaborateurs.add(new Collaborateur("Jean", "pierre", LocalDate.of(1985, 5, 16),
+		listeCollaborateurs.add(new Collaborateur("jean", "pierre", LocalDate.of(1985, 5, 16),
 				"rue intel, 44000 nantes", "1236548970123654", "pierre.jean@societe.com", "comptable", listeDepartements.get(0), true));
-		listeCollaborateurs.add(new Collaborateur("Alfred", "pierre", LocalDate.of(1995, 5, 16),
-				"rue intel, 44000 nantes", "1236548970123654", "@societe.com", "developpeur", listeDepartements.get(2), false));
-		listeCollaborateurs.add(new Collaborateur("Jean", "kevin", LocalDate.of(1989, 5, 16), "rue intel, 44000 nantes",
-				"1236548970123654", "@societe.com", "chef de projet", listeDepartements.get(2), true));
+		listeCollaborateurs.add(new Collaborateur("alfred", "pierre", LocalDate.of(1995, 5, 16),
+				"rue intel, 44000 nantes", "1236548970123654", "pierre.alfred@societe.com", "developpeur", listeDepartements.get(2), false));
+		listeCollaborateurs.add(new Collaborateur("jean", "kevin", LocalDate.of(1989, 5, 16), "rue intel, 44000 nantes",
+				"1236548970123654", "kevin.jean@societe.com", "chef de projet", listeDepartements.get(2), true));
 		listeCollaborateurs.add(new Collaborateur("ruth", "alicia", LocalDate.of(1995, 5, 16),
-				"rue intel, 44000 nantes", "1236548970123654", "@societe.com", "Charge de recherche", listeDepartements.get(1), false));
+				"rue intel, 44000 nantes", "1236548970123654", "alicia.ruth@societe.com", "Charge de recherche", listeDepartements.get(1), false));
 		listeCollaborateurs.add(new Collaborateur("john", "doe", LocalDate.of(1975, 5, 16), "rue intel, 44000 nantes",
-				"1236548970123654", "@societe.com", "directeur", listeDepartements.get(3), true));
+				"1236548970123654", "doe.john@societe.com", "directeur", listeDepartements.get(3), true));
 	}
 
 	@Override

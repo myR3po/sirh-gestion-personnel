@@ -9,69 +9,172 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
+import dev.sgp.service.CollaborateurService;
+import dev.sgp.service.DepartementService;
+import dev.sgp.util.Constantes;
+import dev.sgp.util.Param;
+
 public class EditerCollaborateurController extends HttpServlet {
 
 	private static final long serialVersionUID = -2624817299853340666L;
 	
-	private static final String MATRICULE_PARAM = "matricule";
-	private static final String TITRE_PARAM = "titre";
-	private static final String NOM_PARAM = "nom";
-	private static final String PRENOM_PARAM = "prenom";
-	
-	
+	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
+
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String matricule = req.getParameter(MATRICULE_PARAM);
+		String matricule = req.getParameter(Param.MATRICULE);
 		if (matricule == null || matricule.isEmpty()) {
-			resp.sendError(400, "Un matricule est attendu");
+			resp.sendError(400, "Merci de fournir un matricule");
 		} else {
-			resp.setContentType("text/html");
-			resp.getWriter().write("<h1>Editer un collaborateur</h1>\r\n" + "<p>Matricule : " + matricule + "</p>\r\n");
+
+			Collaborateur collaborateur = collabService.trouverCollaborateurParMatricule(matricule);
+
+			if (collaborateur == null) {
+				resp.sendError(400, "Ce matricule ne correspond à aucun de nos collaborateurs connus");
+			} else {
+				req.setAttribute("listeDepartements", departemenService.listerDepartements());
+				req.setAttribute("collab", collaborateur);
+				req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp").forward(req, resp);
+			}
 		}
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String msgError = "";
+		Map<String, Map<String, String>> results;
+		Map<String, String> errors ;
+		Map<String, String> values ;
+		Collaborateur collaborateur = null;
+		String matricule = req.getParameter(Param.MATRICULE);
 		
-		Map<String, String> results = getParams(req, MATRICULE_PARAM, TITRE_PARAM, NOM_PARAM, PRENOM_PARAM);
-		msgError = results.get("ERROR");
-		
-		if (msgError != null ) {
-			resp.sendError(400, "Les paramètres suivants sont incorrects : "+msgError);
-		} else {
-			resp.setContentType("text/html");
-			resp.setStatus(201);
-			resp.getWriter().write("<h1>Creation d'un collaborateur avec les informations suivantes :</h1>\r\n" + 
-									"<p>" + results.get("SUCCESS") +"</p>\r\n");
+		if(matricule == null || matricule.isEmpty()) {
+			resp.sendError(400, "Merci de fournir un matricule");
+		}else {
+			collaborateur = collabService.trouverCollaborateurParMatricule(matricule);
+			
+			if(collaborateur != null){
+				results = validParams(req);
+				errors = results.get("errors");
+				values = results.get("values");
+						
+				if (errors.isEmpty()) {
+					updateCollaborateur(collaborateur, values);
+					resp.sendRedirect(req.getContextPath()+"/collaborateurs/lister");
+				} else {
+					req.setAttribute("collab", collaborateur);
+					req.setAttribute("listeDepartements", departemenService.listerDepartements());
+					req.setAttribute("values", values);
+					req.setAttribute("errors", errors);
+					resp.setStatus(400);
+					req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp").forward(req, resp);
+				}
+			}else{
+				resp.sendError(400, "Ce matricule ne correspond à aucun de nos collaborateurs connus");
+			}
 		}
 	}
-
 	
-	private Map<String, String> getParams(HttpServletRequest req, String... params) {
-		Map<String, String> results = new HashMap<String, String>();
-		String msgError = "";
-		String msgSuccess = "";
-		String valueParam = null;
+	private Map<String, Map<String, String>> validParams(HttpServletRequest req){
 		
-		for(String param : params) {
-			valueParam = req.getParameter(param);
-			if (valueParam == null || valueParam.isEmpty()) {
-				msgError += " " + param;
-			}
-			else {
-				msgSuccess += param + "=" +valueParam + ","; 
-			}
+		Map<String, String> errors = new HashMap<>();
+		Map<String, String> values = new HashMap<>();
+		final String champRequis = "Ce champ est requis";
+		
+		String adresse = req.getParameter(Param.ADRESSE) != null ? req.getParameter(Param.ADRESSE).trim() : "";
+		String intitule = req.getParameter(Param.INTITULE_POSTE) != null ? req.getParameter(Param.INTITULE_POSTE).trim() : "";
+		String departementParam = req.getParameter(Param.DEPARTEMENT) != null ? req.getParameter(Param.DEPARTEMENT).trim() : "";
+		String banque = req.getParameter(Param.BANQUE) != null ? req.getParameter(Param.BANQUE).trim() : "";
+		String bic = req.getParameter(Param.BIC) != null ? req.getParameter(Param.BIC).trim() : "";
+		String iban = req.getParameter(Param.IBAN) != null ? req.getParameter(Param.IBAN).trim() : "";
+		boolean desactive = req.getParameter("desactive")!= null ? true : false;
+		
+		if(desactive) {
+			values.put("desactive", "");
 		}
 		
-		if(!msgError.isEmpty()) {
-			results.put("ERROR", msgError);
+		if (adresse.isEmpty()) {
+			errors.put(Param.ADRESSE, champRequis);
 		}else {
-			results.put("SUCCESS", msgSuccess.substring(0,	msgSuccess.length() - 1));
+			values.put(Param.ADRESSE, adresse);
 		}
+		
+		if(!intitule.isEmpty()) {
+			values.put(Param.INTITULE_POSTE, intitule);
+		}
+
+		if(!departementParam.isEmpty()) {
+			Departement departement = departemenService.trouverDepartementParNom(departementParam);
+			
+			if(departement == null) {
+				errors.put(Param.INTITULE_POSTE, "Selectionner un departement");
+			}else {
+				values.put(Param.INTITULE_POSTE, departementParam);
+			}
+		}
+		
+		if(!banque.isEmpty()) {
+			values.put(Param.BANQUE, banque);
+			
+			if(bic.isEmpty()) {
+				errors.put(Param.BIC, "Renseigner le BIC");
+			}else {
+				values.put(Param.BIC, bic);
+			}
+			
+			if(iban.isEmpty()) {
+				errors.put(Param.IBAN, "Renseigner l'IBAN");
+			}else {
+				values.put(Param.IBAN, iban);
+			}
+		}else if(banque.isEmpty() && (bic.isEmpty() || iban.isEmpty())) {
+			errors.put(Param.BANQUE, "Renseigner la banque");
+			
+			if(!iban.isEmpty()) {
+				values.put(Param.IBAN, iban);				
+			}
+			
+			if(!bic.isEmpty()) {
+				values.put(Param.BIC, bic);
+			}
+		}
+
+		Map<String, Map<String, String>> results = new HashMap<>();
+		results.put("errors", errors);
+		results.put("values", values);
 		
 		return results;
+	}
+		
+	private void updateCollaborateur(Collaborateur collaborateur, Map<String, String> values) {
+
+		collaborateur.setAdresse(values.get(Param.ADRESSE));
+		
+		if(values.containsKey(Param.BIC)) {
+		collaborateur.setBic(values.get(Param.BIC));
+		}
+		
+		if(values.containsKey(Param.IBAN)) {
+			collaborateur.setIban(values.get(Param.IBAN));
+		}
+		
+		if(values.containsKey(Param.BANQUE)) {
+			collaborateur.setBanque(values.get(Param.BANQUE));
+		}
+		
+		if(values.containsKey(Param.INTITULE_POSTE)) {
+			collaborateur.setIntitulePoste(values.get(Param.INTITULE_POSTE));
+		}
+		
+		Departement departement = departemenService.trouverDepartementParNom(values.get(Param.DEPARTEMENT));
+		collaborateur.setDepartement(departement);
+
+		if(values.containsKey("desactive")) {
+			collaborateur.setActif(false);
+		}
 	}
 	
 }

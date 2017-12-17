@@ -16,4 +16,7 @@ public class DepartementService {
 		listeDepartements.add(departement);
 	}
 	
+	public Departement trouverDepartementParNom(String nomDepartement) {
+		return listeDepartements.stream().filter(d -> d.getNom().equals(nomDepartement)).findFirst().orElse(null);
+	}
 }

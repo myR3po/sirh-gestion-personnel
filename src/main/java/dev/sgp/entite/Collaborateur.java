@@ -17,14 +17,16 @@ public class Collaborateur {
 	private String prenom;
 	private LocalDate dateNaissance;
 	private String adresse;
-	private String  numeroSecuriteSociale;
-	private String  emailPro ;
+	private String numeroSecuriteSociale;
+	private String emailPro ;
 	private String photo;
 	private String intitulePoste;
 	private Departement departement;
 	private ZonedDateTime dateHeureCreation;
 	private Boolean actif;
-	
+	private String Banque;
+	private String bic;
+	private String iban;
 	
 	public Collaborateur() {
 		this.setDateHeureCreation(ZonedDateTime.now());
@@ -32,8 +34,6 @@ public class Collaborateur {
 		matricule = UUID.randomUUID().toString().replaceAll("-", "").substring(4, 9);
 	}
 	
-	
-
 	public Collaborateur(String nom, String prenom, LocalDate dateNaissance, String adresse,
 			String numeroSecuriteSociale, String emailPro, String intitulePoste, Departement departement,
 			Boolean actif) {
@@ -48,8 +48,6 @@ public class Collaborateur {
 		this.departement = departement;
 		this.actif = actif;
 	}
-
-
 
 	/**
 	 * @param dateHeureCreation the dateHeureCreation to set
@@ -211,6 +209,30 @@ public class Collaborateur {
 	public void setDepartement(Departement departement) {
 		this.departement = departement;
 	}
-	
 
+	public String getBanque() {
+		return Banque;
+	}
+
+	public void setBanque(String banque) {
+		Banque = banque;
+	}
+
+	public String getBic() {
+		return bic;
+	}
+
+	public void setBic(String bic) {
+		this.bic = bic;
+	}
+
+	public String getIban() {
+		return iban;
+	}
+
+	public void setIban(String iban) {
+		this.iban = iban;
+	}
+	
+	
 }
