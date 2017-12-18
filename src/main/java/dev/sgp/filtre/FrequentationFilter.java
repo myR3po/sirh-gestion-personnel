@@ -7,16 +7,18 @@ import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 
 import dev.sgp.entite.VisiteWeb;
 import dev.sgp.service.VisiteWebService;
 import dev.sgp.util.Constantes;
 
+@WebFilter(urlPatterns = { "/*" }, description = "Request timer filter")
 public class FrequentationFilter implements Filter {
 
 	private final VisiteWebService visiteService = Constantes.VISITE_WEB_SERVICE;
-	
+
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 	}

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,6 +16,7 @@ import dev.sgp.entite.VisiteWeb;
 import dev.sgp.service.VisiteWebService;
 import dev.sgp.util.Constantes;
 
+@WebServlet("/statistiques")
 public class StatistiqueController extends HttpServlet {
 		
 	private static final long serialVersionUID = -7680478807505281242L;
@@ -31,13 +33,11 @@ public class StatistiqueController extends HttpServlet {
 	private Map<String, LongSummaryStatistics> getStat(){
 		
 		List<VisiteWeb> listVisites = visiteService.listerVisites();
-		Map<String, LongSummaryStatistics> results = listVisites.stream().collect(
+		return listVisites.stream().collect(
 				Collectors.groupingBy(VisiteWeb::getChemin, 
 						Collectors.summarizingLong(VisiteWeb::getTempsExecution))
 				);
 		
-		
-		return results;
 	}
 	
 }

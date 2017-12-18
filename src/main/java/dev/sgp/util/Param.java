@@ -13,4 +13,10 @@ public interface Param {
 	static final String BANQUE = "banque";
 	static final String BIC = "bic";
 	static final String IBAN = "iban";
+	static final String DESACTIVE = "desactive";
+	static final String CIVILITE = "civilite";
+	
+	static final String ERRORS = "errors";
+	static final String VALUES = "values";
+	
 }

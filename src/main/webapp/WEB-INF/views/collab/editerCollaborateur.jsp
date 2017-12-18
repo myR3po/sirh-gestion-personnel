@@ -73,7 +73,7 @@
 									<div class="form-group">
 									  <label class="col-md-4 control-label" for="adresse">Adresse</label>
 									  <div class="col-md-4">                     
-									    <textarea rows="3" class="form-control" id="adresse" name="adresse" required>${values['adresse']}</textarea>
+									    <textarea rows="3" class="form-control" id="adresse" name="adresse" required>${empty values['adresse']?collab.adresse:values['adresse']}</textarea>
 									    <div class="has-error">
 									    	<span class="help-block">${errors['adresse']}</span>
 									    </div>
@@ -109,7 +109,7 @@
 									<div class="form-group">
 									  <label class="col-md-4 control-label" for="intitulePoste">Fonction</label>  
 									  <div class="col-md-6">
-										  	<input id="intitulePoste" name="intitulePoste" class="form-control input-md" value="${values['intitulePoste']}" type="text"/>
+										  	<input id="intitulePoste" name="intitulePoste" class="form-control input-md" value="${empty values['intitulePoste']?collab.intitulePoste:values['intitulePoste']}" type="text"/>
 										  	<div class="has-error">
 										  		<span class="help-block with-errors">${errors['intitulePoste']}</span>
 										  	</div>

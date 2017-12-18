@@ -27,6 +27,7 @@ public class Collaborateur {
 	private String Banque;
 	private String bic;
 	private String iban;
+	private Character civilite;
 	
 	public Collaborateur() {
 		this.setDateHeureCreation(ZonedDateTime.now());
@@ -232,6 +233,14 @@ public class Collaborateur {
 
 	public void setIban(String iban) {
 		this.iban = iban;
+	}
+
+	public Character getCivilite() {
+		return civilite;
+	}
+
+	public void setCivilite(Character civilite) {
+		this.civilite = civilite;
 	}
 	
 	

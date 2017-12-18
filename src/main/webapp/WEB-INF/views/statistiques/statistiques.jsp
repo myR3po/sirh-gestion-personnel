@@ -12,38 +12,42 @@
 	</head>
 	<body>
 	<%@include file="../navBar.jsp" %>
-		<h1>Statistiques</h1>
-
+		<div class="container">
+			
+			<h1>Statistiques</h1>
 			<div class="row">
-			<table class="table table-bordered">
-				<thead>
-				<tr>
-				<th>Chemin</th>
-				<th>Nombre de visites</th>
-				<th>Min (ms)</th>
-				<th>Max (ms)</th>
-				<th>Moyenne (ms)</th>
-				</tr>
-				</thead>
-
-	
-				<%
-				Map<String, LongSummaryStatistics> listeStats = (Map<String, LongSummaryStatistics>)request.getAttribute("listeStats");
-				for (String chemin : listeStats.keySet()) {
-				%>
+				<table class="table table-bordered">
+					<thead>
 					<tr>
-						<td><%= chemin %></td>
-						<td><%= listeStats.get(chemin).getCount() %></td>
-						<td><%= listeStats.get(chemin).getMin() %></td>
-						<td><%= listeStats.get(chemin).getMax() %></td>
-						<td><%= listeStats.get(chemin).getAverage() %></td>
+					<th>Chemin</th>
+					<th>Nombre de visites</th>
+					<th>Min (ms)</th>
+					<th>Max (ms)</th>
+					<th>Moyenne (ms)</th>
 					</tr>
-					
-				<%
-				}
-				%>
-				</tbody>
-			</table>
+					</thead>
+	
+		
+					<%
+					Map<String, LongSummaryStatistics> listeStats = (Map<String, LongSummaryStatistics>)request.getAttribute("listeStats");
+					for (String chemin : listeStats.keySet()) {
+					%>
+						<tr>
+							<td><%= chemin %></td>
+							<td><%= listeStats.get(chemin).getCount() %></td>
+							<td><%= listeStats.get(chemin).getMin() %></td>
+							<td><%= listeStats.get(chemin).getMax() %></td>
+							<td><%= listeStats.get(chemin).getAverage() %></td>
+						</tr>
+						
+					<%
+					}
+					%>
+					</tbody>
+				</table>
 			</div>
+		</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	</body>
 </html>

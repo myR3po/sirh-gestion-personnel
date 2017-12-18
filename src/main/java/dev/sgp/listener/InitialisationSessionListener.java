@@ -5,12 +5,15 @@ import java.util.List;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
+import javax.servlet.annotation.WebListener;
+
 import dev.sgp.entite.Collaborateur;
 import dev.sgp.entite.Departement;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
 
+@WebListener
 public class InitialisationSessionListener implements ServletContextListener {
 
 	@Override

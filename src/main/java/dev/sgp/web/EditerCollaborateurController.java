@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -16,12 +17,13 @@ import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
 import dev.sgp.util.Param;
 
+@WebServlet("/collaborateurs/editer")
 public class EditerCollaborateurController extends HttpServlet {
 
 	private static final long serialVersionUID = -2624817299853340666L;
 	
-	private CollaborateurService collabService = Constantes.COLLAB_SERVICE;
-	private DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
+	private final CollaborateurService collabService = Constantes.COLLAB_SERVICE;
+	private final DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -58,8 +60,8 @@ public class EditerCollaborateurController extends HttpServlet {
 			
 			if(collaborateur != null){
 				results = validParams(req);
-				errors = results.get("errors");
-				values = results.get("values");
+				errors = results.get(Param.ERRORS);
+				values = results.get(Param.VALUES);
 						
 				if (errors.isEmpty()) {
 					updateCollaborateur(collaborateur, values);
@@ -67,8 +69,8 @@ public class EditerCollaborateurController extends HttpServlet {
 				} else {
 					req.setAttribute("collab", collaborateur);
 					req.setAttribute("listeDepartements", departemenService.listerDepartements());
-					req.setAttribute("values", values);
-					req.setAttribute("errors", errors);
+					req.setAttribute(Param.VALUES, values);
+					req.setAttribute(Param.ERRORS, errors);
 					resp.setStatus(400);
 					req.getRequestDispatcher("/WEB-INF/views/collab/editerCollaborateur.jsp").forward(req, resp);
 				}
@@ -78,7 +80,7 @@ public class EditerCollaborateurController extends HttpServlet {
 		}
 	}
 	
-	private Map<String, Map<String, String>> validParams(HttpServletRequest req){
+	private Map<String, Map<String, String>> validParams(final HttpServletRequest req){
 		
 		Map<String, String> errors = new HashMap<>();
 		Map<String, String> values = new HashMap<>();
@@ -90,10 +92,10 @@ public class EditerCollaborateurController extends HttpServlet {
 		String banque = req.getParameter(Param.BANQUE) != null ? req.getParameter(Param.BANQUE).trim() : "";
 		String bic = req.getParameter(Param.BIC) != null ? req.getParameter(Param.BIC).trim() : "";
 		String iban = req.getParameter(Param.IBAN) != null ? req.getParameter(Param.IBAN).trim() : "";
-		boolean desactive = req.getParameter("desactive")!= null ? true : false;
+		boolean desactive = req.getParameter(Param.DESACTIVE)!= null ? true : false;
 		
 		if(desactive) {
-			values.put("desactive", "");
+			values.put(Param.DESACTIVE, "");
 		}
 		
 		if (adresse.isEmpty()) {
@@ -143,8 +145,8 @@ public class EditerCollaborateurController extends HttpServlet {
 		}
 
 		Map<String, Map<String, String>> results = new HashMap<>();
-		results.put("errors", errors);
-		results.put("values", values);
+		results.put(Param.ERRORS, errors);
+		results.put(Param.VALUES, values);
 		
 		return results;
 	}
@@ -172,7 +174,7 @@ public class EditerCollaborateurController extends HttpServlet {
 		Departement departement = departemenService.trouverDepartementParNom(values.get(Param.DEPARTEMENT));
 		collaborateur.setDepartement(departement);
 
-		if(values.containsKey("desactive")) {
+		if(values.containsKey(Param.DESACTIVE)) {
 			collaborateur.setActif(false);
 		}
 	}
