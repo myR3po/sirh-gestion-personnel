@@ -21,6 +21,7 @@ public class FrequentationFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
+		// Obligation de rédéfinir cette methode à cause de l'interface filter
 	}
 
 	@Override
@@ -35,6 +36,7 @@ public class FrequentationFilter implements Filter {
 
 	@Override
 	public void destroy() {
+		// Obligation de rédéfinir cette methode à cause de l'interface filter
 	}
 
 }

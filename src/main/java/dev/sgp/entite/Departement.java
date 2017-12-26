@@ -60,11 +60,11 @@ public class Departement {
 		
 		Departement other = (Departement) obj;
 		
-		if (id == null | other.id == null) {
+		if (id == null || other.id == null) {
 				return false;
 		}
 		
-		if (nom == null | other.nom == null) {
+		if (nom == null || other.nom == null) {
 				return false;
 		}
 		

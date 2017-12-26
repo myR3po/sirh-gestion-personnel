@@ -31,7 +31,7 @@ public class ListerCollaborateursController extends HttpServlet {
 		List<Collaborateur> listeCollaborateurs = collabService.listerCollaborateurs();
 		
 		if(!nom.isEmpty()) {
-			listeCollaborateurs = listeCollaborateurs.stream().filter(c -> c.getNom().startsWith(nom.toUpperCase())).collect(Collectors.toList());
+			listeCollaborateurs = listeCollaborateurs.stream().filter(c -> c.getNom().startsWith(nom.toLowerCase())).collect(Collectors.toList());
 		}
 		
 		if(!departement.isEmpty()) {
@@ -39,10 +39,8 @@ public class ListerCollaborateursController extends HttpServlet {
 		}
 		
 		if(notActif) {
-			listeCollaborateurs = listeCollaborateurs.stream().filter(c -> c.getActif() == false).collect(Collectors.toList());
+			listeCollaborateurs = listeCollaborateurs.stream().filter(c -> !c.getActif()).collect(Collectors.toList());
 		}
-		
-		
 		
 		req.setAttribute("listeDepartements", departemenService.listerDepartements());
 		req.setAttribute("listeCollabs", listeCollaborateurs);

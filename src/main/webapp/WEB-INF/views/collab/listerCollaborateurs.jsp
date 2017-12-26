@@ -1,18 +1,11 @@
+
 <%@page import="java.util.List"%>
 <%@page import="dev.sgp.entite.Collaborateur"%>
 <%@page import="dev.sgp.entite.Departement"%>
 <%@page import="java.time.format.DateTimeFormatter"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-		<title>SGP - App</title>
-	</head>
-	<body>
+
+
 	<%@include file="../navBar.jsp" %>
 		<h1>Les collaborateurs</h1>
 		
@@ -70,7 +63,7 @@
 						  	</div>
 							<div class="panel-body">
 								<div class="col-md-4">
-									<img class="img img-rounded img-responsive" src="http://success-at-work.com/wp-content/uploads/2015/04/free-stock-photos.gif">
+									<img class="img img-rounded img-responsive" src="<%=request.getContextPath()%>/images/unknownPerson.jpg">
 								</div>
 								<div class="col-md-8">
 									
@@ -110,6 +103,6 @@
 			</div>
 		</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>
 </html>

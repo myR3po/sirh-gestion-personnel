@@ -47,7 +47,7 @@ public class AjouterCollaborateurController extends HttpServlet {
 
 			req.setAttribute("listeDepartements", departemenService.listerDepartements());
 			req.setAttribute( Param.VALUES , values );
-			req.setAttribute("errors", errors);
+			req.setAttribute(Param.ERRORS, errors);
 			
 			resp.setStatus(400);
 			req.getRequestDispatcher("/WEB-INF/views/collab/ajouterCollaborateur.jsp").forward(req, resp);
@@ -90,7 +90,7 @@ public class AjouterCollaborateurController extends HttpServlet {
 		} else if (!nom.matches("[a-zA-Z]{3,}")) {
 			errors.put(Param.NOM, "Entrer un nom correct" );
 		} else{
-			values.put(Param.NOM, civilite);
+			values.put(Param.NOM, nom);
 		}
 
 		if (prenom.isEmpty()) {
@@ -98,7 +98,7 @@ public class AjouterCollaborateurController extends HttpServlet {
 		} else if (!prenom.matches("[a-zA-Z]{3,}")) {
 			errors.put(Param.PRENOM, "Entrer un prenom correct" );
 		}else {
-			values.put(Param.PRENOM, civilite);
+			values.put(Param.PRENOM, prenom);
 		}
 
 		if (dob.isEmpty()) {
@@ -125,6 +125,8 @@ public class AjouterCollaborateurController extends HttpServlet {
 			errors.put(Param.INTITULE_POSTE , champRequis);
 		}else if(!intitule.matches("[a-zA-Z ]{4,}")) {
 			errors.put(Param.INTITULE_POSTE , "Entrer un intitulé correct");
+		}else {
+			values.put(Param.INTITULE_POSTE , intitule);
 		}
 		
 		if (departementParam.isEmpty()) {
@@ -136,6 +138,8 @@ public class AjouterCollaborateurController extends HttpServlet {
 			
 			if(departement == null) {
 				errors.put(Param.DEPARTEMENT, "Selectionner un departement");
+			}else {
+				values.put(Param.DEPARTEMENT, departementParam);
 			}
 		}
 
@@ -156,6 +160,7 @@ public class AjouterCollaborateurController extends HttpServlet {
 		Collaborateur collab = new Collaborateur();
 		collab.setNom(values.get(Param.NOM));
 		collab.setPrenom(values.get(Param.PRENOM));
+		collab.setCivilite(Character.valueOf(values.get(Param.CIVILITE).charAt(0)));
 		collab.setNumeroSecuriteSociale(values.get(Param.NUM_SECU));
 		collab.setEmailPro(collab.getPrenom() +"."+ collab.getNom() + "@"+nomDomaineSociete);
 		collab.setDateNaissance(dateNaissance);

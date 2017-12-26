@@ -2,15 +2,8 @@
 <%@page import="java.util.LongSummaryStatistics"%>
 <%@page import="dev.sgp.entite.VisiteWeb"%>
 <%@ page language="java" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-		<link rel="stylesheet" href="<%=request.getContextPath()%>/css/style.css">
-		<title>SGP - App</title>
-	</head>
-	<body>
+
+
 	<%@include file="../navBar.jsp" %>
 		<div class="container">
 			
@@ -48,6 +41,6 @@
 			</div>
 		</div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="<%=request.getContextPath()%>/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	</body>
 </html>

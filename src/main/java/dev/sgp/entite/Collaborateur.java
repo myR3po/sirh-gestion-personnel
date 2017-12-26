@@ -24,7 +24,7 @@ public class Collaborateur {
 	private Departement departement;
 	private ZonedDateTime dateHeureCreation;
 	private Boolean actif;
-	private String Banque;
+	private String banque;
 	private String bic;
 	private String iban;
 	private Character civilite;
@@ -212,11 +212,11 @@ public class Collaborateur {
 	}
 
 	public String getBanque() {
-		return Banque;
+		return banque;
 	}
 
 	public void setBanque(String banque) {
-		Banque = banque;
+		this.banque = banque;
 	}
 
 	public String getBic() {
@@ -241,6 +241,15 @@ public class Collaborateur {
 
 	public void setCivilite(Character civilite) {
 		this.civilite = civilite;
+	}
+
+	@Override
+	public String toString() {
+		return "Collaborateur [matricule=" + matricule + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance="
+				+ dateNaissance + ", adresse=" + adresse + ", numeroSecuriteSociale=" + numeroSecuriteSociale
+				+ ", emailPro=" + emailPro + ", photo=" + photo + ", intitulePoste=" + intitulePoste + ", departement="
+				+ departement + ", dateHeureCreation=" + dateHeureCreation + ", actif=" + actif + ", banque=" + banque
+				+ ", bic=" + bic + ", iban=" + iban + ", civilite=" + civilite + "]";
 	}
 	
 	

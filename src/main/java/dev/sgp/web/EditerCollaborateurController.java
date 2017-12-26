@@ -45,6 +45,7 @@ public class EditerCollaborateurController extends HttpServlet {
 		}
 	}
 
+	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Map<String, Map<String, String>> results;
@@ -86,6 +87,7 @@ public class EditerCollaborateurController extends HttpServlet {
 		Map<String, String> values = new HashMap<>();
 		final String champRequis = "Ce champ est requis";
 		
+		String civilite = req.getParameter(Param.CIVILITE) != null ? req.getParameter(Param.CIVILITE).trim() : "";
 		String adresse = req.getParameter(Param.ADRESSE) != null ? req.getParameter(Param.ADRESSE).trim() : "";
 		String intitule = req.getParameter(Param.INTITULE_POSTE) != null ? req.getParameter(Param.INTITULE_POSTE).trim() : "";
 		String departementParam = req.getParameter(Param.DEPARTEMENT) != null ? req.getParameter(Param.DEPARTEMENT).trim() : "";
@@ -96,6 +98,10 @@ public class EditerCollaborateurController extends HttpServlet {
 		
 		if(desactive) {
 			values.put(Param.DESACTIVE, "");
+		}
+		
+		if (!civilite.isEmpty() && (civilite.equalsIgnoreCase("M") || civilite.equalsIgnoreCase("F"))) {
+			values.put(Param.CIVILITE, civilite);
 		}
 		
 		if (adresse.isEmpty()) {
@@ -112,9 +118,9 @@ public class EditerCollaborateurController extends HttpServlet {
 			Departement departement = departemenService.trouverDepartementParNom(departementParam);
 			
 			if(departement == null) {
-				errors.put(Param.INTITULE_POSTE, "Selectionner un departement");
+				errors.put(Param.DEPARTEMENT, "Selectionner un departement");
 			}else {
-				values.put(Param.INTITULE_POSTE, departementParam);
+				values.put(Param.DEPARTEMENT, departementParam);
 			}
 		}
 		
@@ -132,7 +138,7 @@ public class EditerCollaborateurController extends HttpServlet {
 			}else {
 				values.put(Param.IBAN, iban);
 			}
-		}else if(banque.isEmpty() && (bic.isEmpty() || iban.isEmpty())) {
+		}else if((!bic.isEmpty() || !iban.isEmpty()) && banque.isEmpty()) {
 			errors.put(Param.BANQUE, "Renseigner la banque");
 			
 			if(!iban.isEmpty()) {
@@ -155,6 +161,10 @@ public class EditerCollaborateurController extends HttpServlet {
 
 		collaborateur.setAdresse(values.get(Param.ADRESSE));
 		
+		if(values.containsKey(Param.CIVILITE)) {
+			collaborateur.setCivilite(Character.valueOf(values.get(Param.CIVILITE).charAt(0)));
+		}
+		
 		if(values.containsKey(Param.BIC)) {
 		collaborateur.setBic(values.get(Param.BIC));
 		}
@@ -171,8 +181,11 @@ public class EditerCollaborateurController extends HttpServlet {
 			collaborateur.setIntitulePoste(values.get(Param.INTITULE_POSTE));
 		}
 		
+		
 		Departement departement = departemenService.trouverDepartementParNom(values.get(Param.DEPARTEMENT));
-		collaborateur.setDepartement(departement);
+		if( departement != null) {
+			collaborateur.setDepartement(departement);
+		}
 
 		if(values.containsKey(Param.DESACTIVE)) {
 			collaborateur.setActif(false);
