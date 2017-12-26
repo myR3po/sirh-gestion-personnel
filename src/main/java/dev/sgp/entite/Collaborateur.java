@@ -2,6 +2,7 @@ package dev.sgp.entite;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 /**
@@ -211,46 +212,71 @@ public class Collaborateur {
 		this.departement = departement;
 	}
 
+	/**
+	 * @return the banque
+	 */
 	public String getBanque() {
 		return banque;
 	}
 
+	/**
+	 * @param banque the banque to set
+	 */
 	public void setBanque(String banque) {
 		this.banque = banque;
 	}
 
+	/**
+	 * @return the bic
+	 */
 	public String getBic() {
 		return bic;
 	}
 
+	/**
+	 * @param bic the bic to set
+	 */
 	public void setBic(String bic) {
 		this.bic = bic;
 	}
 
+	/**
+	 * @return the iban
+	 */
 	public String getIban() {
 		return iban;
 	}
 
+	/**
+	 * @param iban the iban to set
+	 */
 	public void setIban(String iban) {
 		this.iban = iban;
 	}
 
+	/**
+	 * @return the civilite
+	 */
 	public Character getCivilite() {
 		return civilite;
 	}
 
+	/**
+	 * @param civilite the civilite to set
+	 */
 	public void setCivilite(Character civilite) {
 		this.civilite = civilite;
 	}
 
-	@Override
-	public String toString() {
-		return "Collaborateur [matricule=" + matricule + ", nom=" + nom + ", prenom=" + prenom + ", dateNaissance="
-				+ dateNaissance + ", adresse=" + adresse + ", numeroSecuriteSociale=" + numeroSecuriteSociale
-				+ ", emailPro=" + emailPro + ", photo=" + photo + ", intitulePoste=" + intitulePoste + ", departement="
-				+ departement + ", dateHeureCreation=" + dateHeureCreation + ", actif=" + actif + ", banque=" + banque
-				+ ", bic=" + bic + ", iban=" + iban + ", civilite=" + civilite + "]";
+	/**
+	 * @param matricule the matricule to set
+	 */
+	public void setMatricule(String matricule) {
+		this.matricule = matricule;
 	}
-	
+
+	public String getDateHeureCreationFormatte() {
+		return this.getDateHeureCreation().format(DateTimeFormatter.ofPattern("dd MMMM yyyy à hh:mm"));
+	}
 	
 }

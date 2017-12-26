@@ -1,0 +1,236 @@
+package dev.sgp.web.form;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.ResourceBundle;
+
+import javax.servlet.http.HttpServletRequest;
+
+import dev.sgp.entite.Collaborateur;
+import dev.sgp.entite.Departement;
+import dev.sgp.service.DepartementService;
+import dev.sgp.util.Constantes;
+import dev.sgp.util.Param;
+
+public class CollaborateurForm {
+
+	private final DepartementService departemenService = Constantes.DEPARTEMENT_SERVICE;
+	
+	private Map<String, String> errors;
+	private final String champRequis = "Ce champ est requis";
+	
+	public CollaborateurForm() {
+		errors = new HashMap<>();
+	}
+	
+	public Collaborateur createCollaborateur(final HttpServletRequest req){
+
+		ResourceBundle resourceBundle = ResourceBundle.getBundle("application");
+		String nomDomaineSociete = resourceBundle.getString("societe.domain.name");
+		
+		String nom = getValeurChamp(req, Param.NOM);
+		String prenom = getValeurChamp(req, Param.PRENOM);
+		String dob = getValeurChamp(req, Param.DATE_NAISSANCE);
+		String adresse = getValeurChamp(req, Param.ADRESSE);
+		String civilite = getValeurChamp(req, Param.CIVILITE);
+		String numeroSecuriteSociale = getValeurChamp(req, Param.NUM_SECU);
+		String intitule = getValeurChamp(req, Param.INTITULE_POSTE);
+		String departementParam = getValeurChamp(req, Param.DEPARTEMENT);
+		
+		Departement departement = null;
+		
+		Collaborateur collab = new Collaborateur();
+		
+		try {
+			validationCivilite(civilite);
+			collab.setCivilite(civilite.charAt(0));
+		} catch (Exception e) {
+			errors.put(Param.CIVILITE, e.getMessage() );
+		}
+		
+				
+		try {
+			validationNomEtPrenom(nom);
+			collab.setNom(nom.toLowerCase());
+		} catch (Exception e) {
+			errors.put(Param.NOM, e.getMessage() );
+		}
+		
+		try {
+			validationNomEtPrenom(prenom);
+			collab.setPrenom(prenom.toLowerCase());
+		} catch (Exception e) {
+			errors.put(Param.PRENOM, e.getMessage() );
+		}
+		
+		try {
+			validationDateNaissance(dob);
+			collab.setDateNaissance(LocalDate.parse(dob));
+		} catch (Exception e) {
+			errors.put(Param.DATE_NAISSANCE , e.getMessage() );
+		}
+
+		if (adresse == null) {
+			errors.put(Param.ADRESSE , champRequis );
+		}else {
+			collab.setAdresse(adresse);
+		}
+		
+		try {
+			validationNumeroSecuriteSociale(numeroSecuriteSociale);
+			collab.setNumeroSecuriteSociale(numeroSecuriteSociale);
+		} catch (Exception e) {
+			errors.put(Param.NUM_SECU , e.getMessage());
+		}
+		
+		if (intitule == null) {
+			errors.put(Param.INTITULE_POSTE , champRequis);
+		}else if(!intitule.matches("[a-zA-Z ]{4,}")) {
+			errors.put(Param.INTITULE_POSTE , "Entrer un intitulé correct");
+		}else {
+			collab.setIntitulePoste(intitule);
+		}
+		
+		if (departementParam == null) {
+			errors.put(Param.DEPARTEMENT , champRequis );
+		}
+		
+		if(errors.isEmpty()) {
+			departement = departemenService.trouverDepartementParNom(departementParam);
+			
+			if(departement == null) {
+				errors.put(Param.DEPARTEMENT, "Selectionner un departement");
+			}else {
+				collab.setDepartement(departement);
+			}
+		}
+		
+		if(collab.getNom() != null && collab.getPrenom() != null) {
+			collab.setEmailPro(collab.getPrenom() +"."+ collab.getNom() + "@"+nomDomaineSociete);
+		}
+		
+		return collab;
+	}
+
+	private void validationNomEtPrenom(String champ) throws Exception {
+		if (champ == null) {
+			throw new Exception(champRequis);
+		} else if (!champ.matches("[a-zA-Z]{3,}")) {
+			throw new Exception("Champ incorrect");
+		}
+	}
+	
+	private void validationCivilite(String civilite) throws Exception {
+		if (civilite == null) {
+			throw new Exception( champRequis );
+		} else if (!civilite.equalsIgnoreCase("M") && !civilite.equalsIgnoreCase("F")) {
+			throw new Exception("Incorrect" );
+		}
+	}
+	
+	private void validationNumeroSecuriteSociale(String numSecu) throws Exception {
+		if (numSecu == null) {
+			throw new Exception(champRequis);
+		}else if(!numSecu.matches("[0-9]{15}")) {
+			throw new Exception("Veuillez entrer un numero de sécurité valide");
+		}
+	}
+	
+	private void validationDateNaissance(String dateNaissance) throws Exception{
+		if (dateNaissance == null) {
+			throw new Exception(champRequis);
+		}else {
+			try {
+			LocalDate.parse(dateNaissance);
+			}catch(DateTimeParseException dtpe) {
+				throw new Exception("Date incorrecte");
+			}
+		}
+	}
+	
+	private String getValeurChamp(final HttpServletRequest req, final String champ ) {
+		String valeur = req.getParameter(champ);
+		return (valeur == null || valeur.trim().length() == 0)? null: valeur;
+	}
+	
+	public Map<String, String> getErrors() {
+		return errors;
+	}
+	
+	
+	public Collaborateur updateCollaborateur(final HttpServletRequest req){
+				
+		String civilite = getValeurChamp(req, Param.CIVILITE);
+		String adresse = getValeurChamp(req, Param.ADRESSE);
+		String intitule = getValeurChamp(req, Param.INTITULE_POSTE);
+		String departementParam = getValeurChamp(req, Param.DEPARTEMENT);
+		String banque = getValeurChamp(req, Param.BANQUE);
+		String bic = getValeurChamp(req, Param.BIC);
+		String iban = getValeurChamp(req, Param.IBAN);
+		
+		Boolean desactive = req.getParameter(Param.DESACTIVE)!= null ? true : false;
+		
+		Collaborateur collab = new Collaborateur();
+		
+		collab.setActif(!desactive);
+		
+		if (civilite != null && (civilite.equalsIgnoreCase("M") || civilite.equalsIgnoreCase("F"))) {
+			collab.setCivilite(civilite.charAt(0));
+		}
+		
+		if (adresse == null) {
+			errors.put(Param.ADRESSE, champRequis);
+		}else {
+			collab.setAdresse(adresse);
+		}
+		
+		if(intitule != null) {
+			if(!intitule.matches("[a-zA-Z ]{4,}")) {
+				errors.put(Param.INTITULE_POSTE , "Entrer un intitulé correct");
+			}else {
+				collab.setIntitulePoste(intitule);
+			}
+		}
+		
+		if(departementParam != null) {
+			Departement departement = departemenService.trouverDepartementParNom(departementParam);
+			
+			if(departement == null) {
+				errors.put(Param.DEPARTEMENT, "Selectionner un departement");
+			}else {
+				collab.setDepartement(departement);
+			}
+		}
+		
+		if(banque != null) {
+			collab.setBanque(banque);
+			
+			if(bic == null) {
+				errors.put(Param.BIC, "Renseigner le BIC");
+			}else {
+				collab.setBic(bic);
+			}
+			
+			if(iban == null) {
+				errors.put(Param.IBAN, "Renseigner l'IBAN");
+			}else {
+				collab.setIban(iban);
+			}
+		}else if((bic != null || iban != null) && banque == null) {
+			errors.put(Param.BANQUE, "Renseigner la banque");
+			
+			if(iban != null) {
+				collab.setIban(iban);				
+			}
+			
+			if(bic != null) {
+				collab.setBic(bic);
+			}
+		}
+		
+		return collab;
+	}	
+	
+}

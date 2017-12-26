@@ -12,12 +12,33 @@ public class CollaborateurService {
 		return listeCollaborateurs;
 	}
 
-	public void sauvegarderCollaborateur(Collaborateur collab) {	
+	public void sauvegarderCollaborateur(Collaborateur collab) {
 		listeCollaborateurs.add(collab);
 	}
-	
-	public Collaborateur trouverCollaborateurParMatricule(String matricule) {	
+
+	public void mettreAjourCollaborateur(Collaborateur collab) {
+		Collaborateur toUpdate = trouverCollaborateurParMatricule(collab.getMatricule());
+		if (toUpdate != null) {
+			if (toUpdate.getActif() != collab.getActif()) {
+				toUpdate.setActif(collab.getActif());
+			}
+
+			toUpdate.setAdresse(collab.getAdresse());
+
+			toUpdate.setCivilite(collab.getCivilite());
+
+			toUpdate.setIntitulePoste(collab.getIntitulePoste());
+			toUpdate.setDepartement(collab.getDepartement());
+
+			toUpdate.setIban(collab.getIban());
+			toUpdate.setBic(collab.getBic());
+			toUpdate.setBanque(collab.getBanque());
+		}
+
+	}
+
+	public Collaborateur trouverCollaborateurParMatricule(String matricule) {
 		return listeCollaborateurs.stream().filter(c -> c.getMatricule().equals(matricule)).findAny().orElse(null);
 	}
-	
+
 }
