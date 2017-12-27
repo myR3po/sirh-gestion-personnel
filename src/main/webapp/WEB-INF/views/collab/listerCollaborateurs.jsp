@@ -1,7 +1,5 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@include file="../inc/header.jsp" %>
 
-
-	<%@include file="../navBar.jsp" %>
 		<h1>Les collaborateurs</h1>
 		
 		<div class="container-fluid">
@@ -15,7 +13,7 @@
 							<input type="submit" value="Rechercher" class="btn btn-default submit" />
 <!-- 							  	<div class="checkbox"> -->
 							    <label class="col-md-offset-2">
-							    	<input name="pasActif" id="pasActif" type="checkbox"> Voir les collaborateurs dÃ©sactivÃ©s
+							    	<input name="pasActif" id="pasActif" type="checkbox"> Voir les collaborateurs désactivés
 							    </label>
 <!-- 							  	</div> -->
 						</div>
@@ -39,16 +37,16 @@
 			
 			<div class="row">	
 			</div>
-			<div class="row">
+<!-- 			<div class="row"> -->
 				<c:forEach var="collab" items="${listeCollabs}">
 					<div class="col-md-4">
 			            <div class="panel panel-default">
 						  	<div class="panel-heading">
-						  	<h3 class="panel-title"> ${collab.nom} ${collab.prenom} </h3>
+						  	<h3 class="panel-title"> <span class="text-uppercase">${collab.nom}</span> <span class="text-capitalize">${collab.prenom}</span> </h3>
 						  	</div>
 							<div class="panel-body">
 								<div class="col-md-4">
-									<img class="img img-rounded img-responsive" src="<c:url value="/images/unknownPerson.jpg"/>">
+									<img class="img img-rounded img-responsive" src="<c:url value="/images/${collab.photo}"/>">
 								</div>
 								<div class="col-md-8">
 									
@@ -58,7 +56,7 @@
 									</div>
 									
 									<div class="row">
-									  <div class="col-md-4"> DÃ©partement </div>  
+									  <div class="col-md-4"> Département </div>  
 									  <div class="col-md-offset-1 col-md-6"> ${collab.departement.nom}</div>
 									</div>
 									
@@ -72,7 +70,7 @@
 							<div class="panel-footer">
 								<div class="row">
 								
-										Date d'entrÃ©e le ${collab.dateHeureCreationFormatte}
+										Date d'entrée le ${collab.dateHeureCreationFormatte}
 									
 									
 										<a class="pull-right btn btn-primary" href="<c:url value="/collaborateurs/editer">
@@ -86,9 +84,7 @@
 		            </div>
 					
 				</c:forEach>
-			</div>
+<!-- 			</div> -->
 		</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</body>
-</html>
+		
+<%@include file="../inc/footer.jsp" %>

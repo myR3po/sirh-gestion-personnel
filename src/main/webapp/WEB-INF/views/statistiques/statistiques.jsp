@@ -1,46 +1,32 @@
-<%@page import="java.util.Map"%>
-<%@page import="java.util.LongSummaryStatistics"%>
-<%@page import="dev.sgp.entite.VisiteWeb"%>
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@include file="../inc/header.jsp" %>
 
-
-	<%@include file="../navBar.jsp" %>
 		<div class="container">
 			
 			<h1>Statistiques</h1>
 			<div class="row">
 				<table class="table table-bordered">
 					<thead>
-					<tr>
-					<th>Chemin</th>
-					<th>Nombre de visites</th>
-					<th>Min (ms)</th>
-					<th>Max (ms)</th>
-					<th>Moyenne (ms)</th>
-					</tr>
-					</thead>
-	
-		
-					<%
-					Map<String, LongSummaryStatistics> listeStats = (Map<String, LongSummaryStatistics>)request.getAttribute("listeStats");
-					for (String chemin : listeStats.keySet()) {
-					%>
 						<tr>
-							<td><%= chemin %></td>
-							<td><%= listeStats.get(chemin).getCount() %></td>
-							<td><%= listeStats.get(chemin).getMin() %></td>
-							<td><%= listeStats.get(chemin).getMax() %></td>
-							<td><%= listeStats.get(chemin).getAverage() %></td>
+							<th>Chemin</th>
+							<th>Nombre de visites</th>
+							<th>Min (ms)</th>
+							<th>Max (ms)</th>
+							<th>Moyenne (ms)</th>
 						</tr>
-						
-					<%
-					}
-					%>
+					</thead>
+					<tbody>
+						<c:forEach var="chemin" items="${listeStats}">
+							<tr>
+								<td><c:out value="${chemin.key}" /></td>
+								<td><c:out value="${chemin.value.count}" /></td>
+								<td><c:out value="${chemin.value.min}" /></td>
+								<td><c:out value="${chemin.value.max}" /></td>
+								<td><c:out value="${chemin.value.average}" /></td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			</div>
 		</div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	</body>
-</html>
+
+<%@include file="../inc/footer.jsp" %>

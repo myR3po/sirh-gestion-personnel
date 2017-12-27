@@ -34,20 +34,50 @@ public class InitialisationSessionListener implements ServletContextListener {
 		String adresse = "rue intel, 44000 nantes";
 		String numeroSecuriteSociale = "1236548970123654";
 
-		listeCollaborateurs.add(new Collaborateur("jean", "pierre", LocalDate.of(1985, 5, 16), adresse,
-				numeroSecuriteSociale, "pierre.jean@societe.com", "comptable", listeDepartements.get(0), true));
+		char male = 'm';
+		char femelle = 'f' ;
 		
-		listeCollaborateurs.add(new Collaborateur("alfred", "pierre", LocalDate.of(1995, 5, 16), adresse,
-				numeroSecuriteSociale, "pierre.alfred@societe.com", "developpeur", listeDepartements.get(2), false));
+		Collaborateur c = new Collaborateur("jean", "pierre", LocalDate.of(1985, 5, 16), adresse, numeroSecuriteSociale);
+		c.setCivilite(male);
+		c.setPhoto(Constantes.PHOTO_MALE);
+		c.setEmailPro(c.getPrenom() +"."+ c.getNom() + "@"+ Constantes.NOM_DOMAINE_SOCIETE);
+		c.setIntitulePoste("comptable");
+		c.setDepartement(listeDepartements.get(0));
+		listeCollaborateurs.add(c);
 		
-		listeCollaborateurs.add(new Collaborateur("jean", "kevin", LocalDate.of(1989, 5, 16), adresse,
-				numeroSecuriteSociale, "kevin.jean@societe.com", "chef de projet", listeDepartements.get(2), true));
+		c = new Collaborateur("alfred", "pierre", LocalDate.of(1995, 5, 16), adresse, numeroSecuriteSociale);
+		c.setCivilite(male);
+		c.setPhoto(Constantes.PHOTO_MALE);
+		c.setEmailPro(c.getPrenom() +"."+ c.getNom() + "@"+ Constantes.NOM_DOMAINE_SOCIETE);
+		c.setIntitulePoste("developpeur");
+		c.setDepartement(listeDepartements.get(2));
+		c.setActif(false);
+		listeCollaborateurs.add(c);
 		
-		listeCollaborateurs.add(new Collaborateur("ruth", "alicia", LocalDate.of(1995, 5, 16), adresse, numeroSecuriteSociale,
-						"alicia.ruth@societe.com", "Charge de recherche", listeDepartements.get(1), false));
+		c = new Collaborateur("jean", "kevin", LocalDate.of(1989, 5, 16), adresse, numeroSecuriteSociale);
+		c.setCivilite(male);
+		c.setPhoto(Constantes.PHOTO_MALE);
+		c.setEmailPro(c.getPrenom() +"."+ c.getNom() + "@"+ Constantes.NOM_DOMAINE_SOCIETE);
+		c.setIntitulePoste("chef de projet");
+		c.setDepartement(listeDepartements.get(2));
+		listeCollaborateurs.add(c);
 		
-		listeCollaborateurs.add(new Collaborateur("john", "doe", LocalDate.of(1975, 5, 16), adresse,
-				numeroSecuriteSociale, "doe.john@societe.com", "directeur", listeDepartements.get(3), true));
+		c = new Collaborateur("ruth", "alicia", LocalDate.of(1995, 5, 16), adresse, numeroSecuriteSociale);
+		c.setCivilite(femelle);
+		c.setPhoto(Constantes.PHOTO_FEMELLE);
+		c.setEmailPro(c.getPrenom() +"."+ c.getNom() + "@"+ Constantes.NOM_DOMAINE_SOCIETE);
+		c.setIntitulePoste("Charge de recherche");
+		c.setDepartement(listeDepartements.get(1));
+		c.setActif(false);
+		listeCollaborateurs.add(c);
+		
+		c = new Collaborateur("john", "doe", LocalDate.of(1975, 5, 16), adresse, numeroSecuriteSociale);
+		c.setCivilite(male);
+		c.setPhoto(Constantes.PHOTO_MALE);
+		c.setEmailPro(c.getPrenom() +"."+ c.getNom() + "@"+ Constantes.NOM_DOMAINE_SOCIETE);
+		c.setIntitulePoste("directeur");
+		c.setDepartement(listeDepartements.get(3));
+		listeCollaborateurs.add(c);
 	}
 
 	@Override

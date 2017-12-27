@@ -11,7 +11,6 @@ import dev.sgp.entite.Collaborateur;
 import dev.sgp.service.CollaborateurService;
 import dev.sgp.service.DepartementService;
 import dev.sgp.util.Constantes;
-import dev.sgp.util.Param;
 import dev.sgp.web.form.CollaborateurForm;
 
 @WebServlet("/collaborateurs/editer")
@@ -25,7 +24,7 @@ public class EditerCollaborateurController extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		String matricule = req.getParameter(Param.MATRICULE);
+		String matricule = req.getParameter(Constantes.PARAM_MATRICULE);
 		if (matricule == null || matricule.isEmpty()) {
 			resp.sendError(400, "Merci de fournir un matricule");
 		} else {
@@ -46,7 +45,7 @@ public class EditerCollaborateurController extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		Collaborateur collaborateur = null;
-		String matricule = req.getParameter(Param.MATRICULE);
+		String matricule = req.getParameter(Constantes.PARAM_MATRICULE);
 		
 		if(matricule == null || matricule.isEmpty()) {
 			resp.sendError(400, "Merci de fournir un matricule");

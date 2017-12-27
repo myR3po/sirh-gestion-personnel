@@ -1,3 +1,4 @@
+<%@ page language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html>
@@ -18,7 +19,7 @@
 		      <span class="icon-bar"></span>
 		      <span class="icon-bar"></span>
 		    </button>
-		    <a class="navbar-brand" href="<%=request.getContextPath()%>">SIRH</a>
+		    <a class="navbar-brand" href="<c:url value="/"/>">SIRH</a>
 		  </div>
 		
 		  <!-- Collect the nav links, forms, and other content for toggling -->
@@ -27,13 +28,13 @@
 		      <li class="dropdown">
 		         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Collaborateur <span class="caret"></span></a>
 		         <ul class="dropdown-menu">
-		           <li><a href="<%=request.getContextPath()%>/collaborateurs/lister">Lister</a></li>
-		           <li><a href="<%=request.getContextPath()%>/collaborateurs/ajouter">ajouter</a></li>
+		           <li><a href="<c:url value="/collaborateurs/lister"/>">Lister</a></li>
+		           <li><a href="<c:url value="/collaborateurs/ajouter"/>">ajouter</a></li>
 		         </ul>
 		       </li>
 		      
 		      
-		      <li><a href="<%=request.getContextPath()%>/statistiques">Statistiques</a></li>
+		      <li><a href="<c:url value="/statistiques"/>">Statistiques</a></li>
 		    </ul>
 		    
 		    <ul class="nav navbar-nav navbar-right">

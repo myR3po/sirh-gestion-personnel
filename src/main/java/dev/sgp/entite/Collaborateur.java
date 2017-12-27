@@ -36,19 +36,13 @@ public class Collaborateur {
 		matricule = UUID.randomUUID().toString().replaceAll("-", "").substring(4, 9);
 	}
 	
-	public Collaborateur(String nom, String prenom, LocalDate dateNaissance, String adresse,
-			String numeroSecuriteSociale, String emailPro, String intitulePoste, Departement departement,
-			Boolean actif) {
+	public Collaborateur(String nom, String prenom, LocalDate dateNaissance, String adresse, String numeroSecuriteSociale) {
 		this();
 		this.nom = nom;
 		this.prenom = prenom;
 		this.dateNaissance = dateNaissance;
 		this.adresse = adresse;
 		this.numeroSecuriteSociale = numeroSecuriteSociale;
-		this.emailPro = emailPro;
-		this.intitulePoste = intitulePoste;
-		this.departement = departement;
-		this.actif = actif;
 	}
 
 	/**

@@ -1,7 +1,5 @@
-<%@ page language="java" pageEncoding="UTF-8"%>
+<%@include file="../inc/header.jsp" %>
 
-
-	<%@include file="../navBar.jsp" %>
 		<h1> Nouveau Collaborateur </h1>
 		
 		<div class="container">
@@ -9,7 +7,7 @@
 	            <div class="col-md-6">
 	            
 	            	<div class="form-group">
-					  <label for="civilite">CivilitÃ©</label>
+					  <label for="civilite">Civilité *</label>
 					    <select id="civilite" name="civilite" class="form-control">
 					      <option value="">--- Select ---</option>
 					      <option value="M">Monsieur</option>
@@ -29,7 +27,7 @@
 					</div>
 					
 					<div class="form-group">
-	                    <label for="prenom">PrÃ©nom *</label>
+	                    <label for="prenom">Prénom *</label>
 	                    <input class="form-control" type="text" id="prenom" name="prenom" value="${collab.prenom}" required />
 	                    <div class="has-error">
 	                    	<span class="help-block">${form.errors['prenom']}</span>
@@ -88,7 +86,5 @@
 				</div>
             </form>
         </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
-	</body>
-</html>
+
+<%@include file="../inc/footer.jsp" %>
